@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Get subscription status for Firestone
+
+Globals:
+  Api:
+    # API Gateway regional endpoints
+    EndpointConfiguration: EDGE
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+
+Resources:
+  GetSubscriptionStatusFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.zerotoheroes.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: target/api-get-subscription-status-1.0-SNAPSHOT.jar
+      MemorySize: 512
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+        - SecretsManagerReadWrite
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-eccd2691
+        SubnetIds:
+          - subnet-65ff583c
+          - subnet-894624ec
+          - subnet-b05fdfc7
+      Timeout: 360
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /subscriptions/{userid}/{username}
+            Method: GET
+
+Outputs:
+  GetSubscriptionStatusApi:
+    Description: API Gateway endpoint URL for Prod stage for subscription services
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/subscriptions'
+    Export:
+      Name: SubscriptionStatusApi
+
+  GetSubscriptionStatusFunction:
+    Description: "GetSubscriptionStatusFunction Lambda Function ARN"
+    Value: !GetAtt GetSubscriptionStatusFunction.Arn
