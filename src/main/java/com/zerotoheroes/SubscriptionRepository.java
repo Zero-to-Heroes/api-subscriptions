@@ -42,8 +42,7 @@ public class SubscriptionRepository {
     public SubscriptionStatus getSubscriptionStatus(String userid, String username) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Query q = session.createQuery("FROM SubscriptionStatus WHERE userid = :userid AND username = :username")
-                .setParameter("userid", userid)
+        Query q = session.createQuery("FROM SubscriptionStatus WHERE username = :username")
                 .setParameter("username", username);
         SubscriptionStatus result = (SubscriptionStatus) q.uniqueResult();
         session.getTransaction().commit();

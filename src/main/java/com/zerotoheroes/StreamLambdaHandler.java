@@ -36,10 +36,14 @@ public class StreamLambdaHandler implements RequestStreamHandler {
             SubscriptionStatus result = null;
             if (event.get("pathParameters") != null) {
                 JSONObject pathParameters = (JSONObject) event.get("pathParameters");
+                context.getLogger().log("Found path params " + pathParameters);
                 String userId = (String) pathParameters.get("userid");
+                context.getLogger().log("userId " + userId);
                 String username = (String) pathParameters.get("username");
+                context.getLogger().log("username " + username);
                 SubsService service = injector.getInstance(SubsService.class);
                 result = service.getSubscriptionStatus(userId, username);
+                context.getLogger().log("subscription status " + result);
             }
             if (result != null) {
                 responseBody.put("result", result);
