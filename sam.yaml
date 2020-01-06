@@ -18,7 +18,7 @@ Resources:
       Handler: com.zerotoheroes.StreamLambdaHandler::handleRequest
       Runtime: java8
       CodeUri: target/api-get-subscription-status-1.0-SNAPSHOT.jar
-      MemorySize: 256
+      MemorySize: 350
       Policies:
         - AWSLambdaVPCAccessExecutionRole
         - SecretsManagerReadWrite
