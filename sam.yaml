@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Get subscription status for Firestone
 
@@ -18,7 +18,7 @@ Resources:
       Handler: com.zerotoheroes.StreamLambdaHandler::handleRequest
       Runtime: java8
       CodeUri: target/api-get-subscription-status-1.0-SNAPSHOT.jar
-      MemorySize: 512
+      MemorySize: 256
       Policies:
         - AWSLambdaVPCAccessExecutionRole
         - SecretsManagerReadWrite
@@ -40,7 +40,7 @@ Resources:
 Outputs:
   GetSubscriptionStatusApi:
     Description: API Gateway endpoint URL for Prod stage for subscription services
-    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/subscriptions'
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/subscriptions"
     Export:
       Name: SubscriptionStatusApi
 
